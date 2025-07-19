@@ -15,38 +15,55 @@
 -- directly below the corresponding instruction
 -- -----------------------------------------------
 
+
 SELECT * FROM regions;
 SELECT * FROM species;
 SELECT * FROM climate;
 SELECT * FROM observations;
 
+SELECT * FROM observations
+LIMIT 10;
 
--- MISSION 1
--- Your query here;
+SELECT DISTINCT region_id FROM observations;
 
--- MISSION 2
--- Your query here;
+SELECT COUNT(DISTINCT species_id) AS especies_distintas FROM observations;
 
+SELECT COUNT(*) AS total_observaciones
+FROM observations
+WHERE region_id = 2;
+SELECT COUNT(*) AS total_observaciones
 
--- MISSION 3
--- Your query here;
+SELECT COUNT(*) AS total_observaciones
+FROM observations
+WHERE date = '1998-08-08';
 
+SELECT region_id, COUNT(*) AS total_observations
+FROM observations
+GROUP BY region_id
+ORDER BY total_observations DESC;
 
--- MISSION 4
--- Your query here;
+SELECT species_id, COUNT(*) AS total_records
+FROM observations
+GROUP BY species_id
+ORDER BY total_records DESC
+LIMIT 5;
 
+SELECT observer, COUNT(*) AS total
+FROM observations
+GROUP BY observer
+ORDER BY total DESC;
 
--- MISSION 5
--- Your query here;
+SELECT regions.name AS region, species.scientific_name, COUNT(*) AS total
+FROM observations
+JOIN species ON observations.species_id = species.id
+JOIN regions ON observations.region_id = regions.id
+GROUP BY region, species.scientific_name
+ORDER BY region, total DESC;
 
+SELECT observations.id, species.scientific_name
+FROM observations
+JOIN species ON observations.species_id = species.id;
 
--- MISSION 6
--- Your query here;
-
-
--- MISSION 7
--- Your query here;
-
-
--- MISSION 8
--- Your query here;
+UPDATE species
+SET scientific_name = 'Panthera onca'
+WHERE scientific_name = 'Panthera oncca';
